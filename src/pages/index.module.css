@@ -1,0 +1,23 @@
+.main {
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    /* height: 450px; */
+    /* flex-wrap: wrap; */
+    /* width: 80%;     */
+}
+
+.front {
+    /* display: flex;
+    justify-content: center; */
+    padding: 110px;
+    color: #11171A;
+    max-width: 1200px;
+    font-family: 'museo-sans',  sans-serif;
+    font-size: 80px;
+    font-weight: 1000;
+    letter-spacing: -0.2px;
+    line-height: 1.1    ;
+    text-align: center;
+}
+
