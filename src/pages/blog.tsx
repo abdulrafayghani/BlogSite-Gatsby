@@ -12,31 +12,30 @@ const blog = () => {
             edges {
               node {
                 title
+                slug
                 excerpt {
                   childMarkdownRemark {
                     excerpt(pruneLength: 150)
                   }
                 }
-                publishDate(formatString: "DD MMMM,YYYY")
+                publishDate(formatString: "DD MMMM , YYYY")
               }
             }
           }
         }
-        `
-
-    )
+        `)
 
     return (
         <div>
              <Layout>
                 <div>
                   {data.allContentfulBlogPost.edges.map((edge) => {
-                    const { title, excerpt, publishDate } = edge.node
+                    const { title, excerpt, publishDate, slug } = edge.node
                     // const { excerpt } = excerpt.childMarkdownRemark
 
                     return(
                       <div>
-                        <BlogCard title={title} excerpt={excerpt.childMarkdownRemark.excerpt} publishDate={publishDate} />
+                        <BlogCard title={title} slug={slug} excerpt={excerpt.childMarkdownRemark.excerpt} publishDate={publishDate} />
                       </div>
                     )
                   })}

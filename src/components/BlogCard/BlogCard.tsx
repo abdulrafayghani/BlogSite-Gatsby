@@ -1,15 +1,17 @@
 import React, { FC } from 'react'
 // import style from './blogCard.module.css'
-import { Avatar, Box, Button, Card, CardContent, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { Avatar, Box, Button, Card, CardContent, Typography, makeStyles, createStyles } from '@material-ui/core'
+import { navigate } from 'gatsby'
 
 interface Props {
     title: string
+    slug: string
     excerpt: string
     publishDate: string
 }
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) =>
+ createStyles({
     root: {
         width: '100%',
         height: '100%',
@@ -17,26 +19,43 @@ const useStyle = makeStyles({
         justifyContent: 'center',
         alignContent:'center'
     },
-    main: {
+    card: {
         marginTop: '100px',
         width: '65%',
-        height:'100%'   
+        height:'100%',
+        [theme.breakpoints.down('xs')]: {
+            width: "100%",
+            display: 'flex',
+            // justifyContent: 'center'
+            // textAlign: 'center'
+        }   
     },
     text: {
         fontSize: '45px',
-        fontWeight: 1000
+        fontWeight: 1000,
+        [theme.breakpoints.down("xs")] : {
+            fontSize: '30px'
+        }
+    },
+    cardHead: {
+        [theme.breakpoints.down("xs")] : {
+            width: '250%',
+            // display: 'flex'
+        }   
     }
 })
 
-const BlogCard: FC<Props> = ({ title, excerpt, publishDate }) => {
+)
+
+const BlogCard: FC<Props> = ({  title, slug, excerpt, publishDate }) => {
     const classes = useStyle()
     
     return (
         <div >
             <Box className={classes.root}>
-            <Card className={classes.main} variant='outlined'>
+            <Card className={classes.card} variant='outlined'>
                 <CardContent >
-                    <Box display='flex'>
+                    <Box className={classes.cardHead} display='flex'>
                         <Avatar >H</Avatar>
                         <Box width='25%' display='flex' justifyContent='space-evenly' mt='5px'>
                             <Typography style={{ fontFamily: 'Dancing'}}>by {' '} </Typography>
@@ -49,19 +68,14 @@ const BlogCard: FC<Props> = ({ title, excerpt, publishDate }) => {
                         <Typography className={classes.text} variant='h2'>
                             {title}
                         </Typography>
-                        <Typography style={{ fontSize:'22px'}}>
+                        <Typography style={{ fontSize:'20px'}}>
                             {excerpt}
                         </Typography>
                     <Box>
-                        <Button variant='outlined' style={{borderRadius:'20px'}}>
+                        <Button variant='outlined' style={{borderRadius:'20px'}} onClick={() => navigate(`/blog/${slug}`)}>
                             Continue Reading
                         </Button>
                         </Box>
-                    </Box>
-                    <Box>
-                        <Typography>
-                            
-                        </Typography>
                     </Box>
                 </CardContent>
             </Card>

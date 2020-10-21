@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import { navigate } from "gatsby";
 import {
     AppBar,
@@ -14,13 +14,13 @@ import {
     
   } from '@material-ui/core';
   import shop from '@material-ui/icons/Shop'
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
-  const useStyles: any = makeStyles(() =>
+  const useStyles: any = makeStyles((theme) =>
   createStyles({
     header: {
-      // boxShadow: 'none',
+      boxShadow: 'none',
       backgroundColor: 'transparent',
-      // margin:'auto'
     },
     menu: {
       color: 'white',
@@ -29,14 +29,33 @@ import {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      // fontFamily: 'museo-sans', sans-serif,
       color: '#11171A',
-      fontWeight: 700
+      fontWeight: 700,
+      [theme.breakpoints.down("sm")]: {
+        width: '100%'
+      }
     },
     iconText: {
       fontSize: '20px',
       fontWeight: 'bold',
       letterSpacing:'0.3px',
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: '-17px'
+      },
+    },
+    buttons: {
+      color: '#263238',
+      fontWeight: 'bold',
+      width: 275,
+      display: 'flex',
+      justifyContent: 'space-around',
+      [theme.breakpoints.down("sm")]: {
+        height: '35px',
+        // width: '400px',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginRight: '20px',
+      }
     }
   })
 );
@@ -51,14 +70,24 @@ const HideOnScroll: FC<any> = ({ children }) => {
   };
 
 const Header = () => {
-
     const classes = useStyles();
+    const [alignment, setAlignment] = useState<string | null>('button')
+    const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
+      setAlignment(newAlignment);
+    };
+
     return (
         <div>
             <Fragment>
               <HideOnScroll>
                 <AppBar position='fixed' className={classes.header}>
                   <Toolbar className={classes.toolbar}>
+                   {/* <ToggleButtonGroup 
+                           value={alignment}
+                           exclusive
+                           onChange={handleAlignment}
+                      > */}
+                        {/* <ToggleButton> */}
                     <IconButton style={{paddingLeft:'50px', backgroundColor:'transparent'}}
                       onClick={() => navigate('/')}
                       edge="start"
@@ -69,9 +98,19 @@ const Header = () => {
                           copyblogger
                         </Typography>
                     </IconButton>
-                    <Box display='flex' justifyContent='space-around' width='275px' >
-                    <Button variant='outlined' onClick={()=> navigate('/blog')}>Blogs</Button>
-                    <Button  variant='outlined'>Log out</Button>
+                    {/* </ToggleButton> */}
+                    <Box className={classes.buttons} >
+                      {/* <ToggleButtonGroup 
+                           value={alignment}
+                           exclusive
+                           onChange={handleAlignment}
+                      > */}
+                      {/* <ToggleButton value='button' onClick={()=> navigate('/blog')}>
+                        Blogs */}
+                        <Button variant='text' onClick={()=> navigate('/blog')}>Blogs</Button>
+                      {/* </ToggleButton> */}
+                    <Button  variant='text'>Log out</Button>
+                    {/* </ToggleButtonGroup> */}
                     </Box>
                   </Toolbar>
                 </AppBar>

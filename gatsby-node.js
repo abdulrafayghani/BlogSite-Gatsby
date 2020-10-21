@@ -1,22 +1,25 @@
-const { graphql } = require('gatsby')
-const path = require('path')
+const path = require("path")
 
-exports.createaPages = async ({ grahql, actions }) => {
-    const response = await graphql(`
-        query {
-            allContentfulBlogPost {
-                edges {
-                    node {
-                        slug
-                    }
-                }
-            }
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const response = await graphql(`
+    query {
+      allContentfulBlogPost {
+        edges {
+          node {
+            slug
+          }
         }
-    `)
-
-    response.data.allContentfulBlogPost.edges.forEach(edge => {
-        createaPage({
-            path: `/blog/${edge.node.slug}`,
-            component: path.resolve('./src/templates/blogPost.tsx')
-        })
+      }
     }
+  `)
+  response.data.allContentfulBlogPost.edges.forEach(edge => {
+    createPage({
+      path: `/blog/${edge.node.slug}`,
+      component: path.resolve("./src/templates/blogPost.tsx"),
+      context: {
+        slug: edge.node.slug,
+      },
+    })
+  })
+}
